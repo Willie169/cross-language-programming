@@ -22,10 +22,13 @@ int main() {
         py::print(df);
         std::cerr << "6\n";
     } catch (py::error_already_set &e) {
-        py::print(py::module::import("sys").attr("exc_info")());
+        std::cerr << "Python error: " << e.what() << std::endl;
         return 1;
     } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "C++ error: " << e.what() << std::endl;
+        return 1;
+    } catch (...) {
+        std::cerr << "Unknown error occurred" << std::endl;
         return 1;
     }
 
